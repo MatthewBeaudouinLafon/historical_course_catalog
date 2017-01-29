@@ -1,7 +1,7 @@
 # This script sets up the SQLite database
 import sqlite3
 
-sqlite_file = "/mnt/d/dev/Olin/HackTheLib/historical_course_catalog/data.sqlite"
+sqlite_file = "data.sqlite"
 
 conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
