@@ -9,23 +9,18 @@ c = conn.cursor()
 # Create tables
 c.execute("""CREATE TABLE IF NOT EXISTS student(
 	student_id	INTEGER			PRIMARY KEY 	AUTOINCREMENT,
-	first_name	TEXT			NOT NULL,
-	last_name	TEXT			NOT NULL
+	name	TEXT			NOT NULL,
 	)""")
 
 c.execute("""CREATE TABLE IF NOT EXISTS class(
 	class_id 	INTEGER			PRIMARY KEY 	AUTOINCREMENT,
 	name		TEXT			NOT NULL,
-	olin_id		TEXT			NOT NULL,
-	semester	TEXT			NOT NULL
 	)""")
 
 c.execute("""CREATE TABLE IF NOT EXISTS project(
 	project_id	INTEGER			PRIMARY KEY 	AUTOINCREMENT,
 	title		TEXT			NOT NULL,
-	semester	TEXT			NOT NULL,
-	start_date	TEXT,
-	pdf_path	TEXT
+	class_id    INTEGER			NOT NULL
 	)""")
 
 c.execute("""CREATE TABLE IF NOT EXISTS class_student(
