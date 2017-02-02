@@ -47,8 +47,6 @@ def show_single_class(username, class_name):
 # def login():	
 #     return render_template('input_form.html')
 
-
-
 # @app.route('/area/<course_area>')
 # def area_page(course_area):
 #     return render_template('course_area.html', courses=courses[courses.course_area == course_area].iterrows())
