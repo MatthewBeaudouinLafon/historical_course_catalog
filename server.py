@@ -10,6 +10,8 @@ import os
 import pandas as pd
 from flask import Flask, redirect, render_template, request, url_for
 
+import retrieveData as retrieve
+
 app = Flask(__name__)
 
 # courses = pd.read_csv('./data/olin-courses-16-17.csv')

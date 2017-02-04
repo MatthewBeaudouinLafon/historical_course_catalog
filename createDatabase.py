@@ -9,12 +9,12 @@ c = conn.cursor()
 # Create tables
 c.execute("""CREATE TABLE IF NOT EXISTS student(
 	student_id	INTEGER			PRIMARY KEY 	AUTOINCREMENT,
-	name	TEXT			NOT NULL,
+	name	TEXT			NOT NULL
 	)""")
 
 c.execute("""CREATE TABLE IF NOT EXISTS class(
 	class_id 	INTEGER			PRIMARY KEY 	AUTOINCREMENT,
-	name		TEXT			NOT NULL,
+	name		TEXT			NOT NULL
 	)""")
 
 c.execute("""CREATE TABLE IF NOT EXISTS project(
@@ -36,10 +36,10 @@ c.execute("""CREATE TABLE IF NOT EXISTS student_project(
 print("Created tables")
 
 # Create dummy variables
-c.execute("INSERT INTO student (first_name, last_name) VALUES (?, ?)", ('JOHN', 'DOE'))
+c.execute("INSERT INTO student (name) VALUES (?)", ('JOHN DOE', ))
 student_id = c.lastrowid
 
-c.execute("INSERT INTO class (name, olin_id, semester) VALUES (?, ?, ?)", ('Hacking the Library', 'ENGR3599A-01', 'SP2017'))
+c.execute("INSERT INTO class (name) VALUES (?)", ('Hacking the Library', ))
 class_id = c.lastrowid
 
 c.execute("INSERT INTO class_student (class_id, student_id) VALUES (?,?)", (class_id, student_id))
