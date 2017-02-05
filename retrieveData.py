@@ -5,6 +5,14 @@ We should probably condense these functions to make them more general-purpose, a
 """ 
 import sqlite3
 
+def find_student_id(c, user):
+	c.execute("SELECT student_id FROM student WHERE user=(?)", (user, ))
+	the_id = c.fetchone()
+	if the_id:
+		return the_id
+	else:
+		return "No such user?"			#Needs work
+
 def find_students_in_class(c, class_id):		#Return a list of names of students in a class with a certain class_id
 	c.execute("SELECT student_id FROM class_student WHERE class_id=(?)", (class_id, ))
 	student_ids=tuple([thing[0] for thing in c.fetchall()])		#create a tuple of all student ids in the class

@@ -6,8 +6,11 @@ student_id
 """
 import sqlite3
 
-def new_student(c, name, class_ids=[]):			#Create a new student, put them into certain classes
-	c.execute("INSERT INTO student (name) VALUES (?)", (name, ))
+def new_student(c, name, user, class_ids=[]):			#Create a new student, put them into certain classes
+	try:
+		c.execute("INSERT INTO student (name, user) VALUES (?, ?)", (name, user))
+	except sqlite3.IntegrityError:
+		return "Username already in use"			#Needs some work
 	student_id = c.lastrowid
 	for class_id in class_ids:
 		c.execute("INSERT INTO class_student (class_id, student_id) VALUES (?, ?)", (class_id, student_id))

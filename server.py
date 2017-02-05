@@ -1,20 +1,19 @@
-"""
-A Flask server that presents a minimal browsable interface for the Olin course catalog.
-author: Oliver Steele <oliver.steele@olin.edu>
-date  : 2017-01-18
-license: MIT
-"""
-
-import os
+import os, atexit
 
 import pandas as pd
 from flask import Flask, redirect, render_template, request, url_for
 
 import retrieveData as retrieve
+import storeData as store
+
+import sqlite3
+
+sqlite_file = "data.sqlite"
+
+conn = sqlite3.connect(sqlite_file)
+c = conn.cursor()
 
 app = Flask(__name__)
-
-# courses = pd.read_csv('./data/olin-courses-16-17.csv')
 
 @app.route('/health')
 def health():
@@ -32,6 +31,17 @@ def login_page():
 def login():	
     username = request.form['username']
     return redirect('/user='+username)
+
+@app.route('/new_user')
+def new_user_page():	
+    return render_template('new_user.html')
+
+@app.route('/new_user', methods=['POST'])
+def new_user():	
+	name = request.form['name']
+	username = request.form['username']
+	store.new_student(c, name, username)
+	return redirect("/login")
 
 @app.route('/user=<username>')
 def your_classes(username):	
@@ -53,5 +63,10 @@ def show_single_class(username, class_name):
 # def area_page(course_area):
 #     return render_template('course_area.html', courses=courses[courses.course_area == course_area].iterrows())
 
+def end_func(conn):
+	conn.commit()
+	conn.close()
+
 if __name__ == '__main__':
+	atexit.register(end_func, conn=conn)
 	app.run(debug=True, threaded=True)
