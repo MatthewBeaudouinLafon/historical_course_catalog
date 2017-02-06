@@ -8,6 +8,7 @@ import sqlite3
 
 def new_student(c, name, user, class_ids=[]):			#Create a new student, put them into certain classes
 	try:
+		print(type(user), type(name))
 		c.execute("INSERT INTO student (name, user) VALUES (?, ?)", (name, user))
 	except sqlite3.IntegrityError:
 		return "Username already in use"			#Needs some work
