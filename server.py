@@ -1,7 +1,7 @@
 import os, atexit
 
 import pandas as pd
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, g
 
 import retrieveData as retrieve
 import storeData as store
@@ -10,10 +10,31 @@ import sqlite3
 
 sqlite_file = "data.sqlite"
 
-conn = sqlite3.connect(sqlite_file)
-c = conn.cursor()
+# conn = sqlite3.connect(sqlite_file)
+# c = conn.cursor()
+
+def get_db():
+	db = getattr(g, '_database', None)
+	if db is None:
+		db = g._database = sqlite3.connect(sqlite_file)
+	return db
+
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
 
 app = Flask(__name__)
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+	db = getattr(g, '_database', None)
+	if db is not None:
+		db.close()
+
+
 
 @app.route('/health')
 def health():
@@ -38,6 +59,7 @@ def new_user_page():
 
 @app.route('/new_user', methods=['POST'])
 def new_user():	
+	c = get_db().cursor()
 	name = request.form['name']
 	username = request.form['username']
 	store.new_student(c, name, username)
@@ -63,10 +85,12 @@ def show_single_class(username, class_name):
 # def area_page(course_area):
 #     return render_template('course_area.html', courses=courses[courses.course_area == course_area].iterrows())
 
-def end_func(conn):
-	conn.commit()
-	conn.close()
+# def end_func(conn):
+# 	conn.commit()
+# 	conn.close()
 
 if __name__ == '__main__':
-	atexit.register(end_func, conn=conn)
-	app.run(debug=True, threaded=False)
+	# atexit.register(end_func, conn=get_db())
+	atexit.register(close_connection)
+	app.run(debug=True, threaded=True)
+
