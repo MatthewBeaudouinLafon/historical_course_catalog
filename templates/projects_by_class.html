@@ -1,12 +1,12 @@
 <html>
-<head>
+	<head>
 		<meta charset="utf-8">
-		<title>Project Input</title>
+		<title>Projects</title>
 		<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
-	    <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
-	    <link rel="stylesheet" href="custom.css">
-</head>
+		<link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/normalize.css')}}">
+	    <link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/skeleton.css')}}">
+	    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+	  </head>
 <body>
 <h1>Your {{class}} projects</h1>
 <h2><a href="">Project 1: robot</a></h2>
