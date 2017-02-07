@@ -68,11 +68,16 @@ def new_user():
 
 @app.route('/user=<username>')
 def your_classes(username):	
-    return render_template('your_classes_home.html', username=username)
+	c = get_db().cursor()
+	student_id = retrieve.find_student_id(c, username)
+	name = retrieve.find_student_name(c, student_id)
+	classes = retrieve.find_students_classes(c, student_id)
+	print(classes)
+	return render_template('student_dashboard.html', name = name, classes=classes)
 
 @app.route('/user=<username>/class=<class_name>')
 def show_single_class(username, class_name):	
-    return render_template('projects_by_class.html')
+    return render_template('class_dashboard.html')
 
 # @app.route('/project_page')
 # def login():	
