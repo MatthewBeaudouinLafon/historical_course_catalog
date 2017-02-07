@@ -4,11 +4,13 @@ database. We might want to add this one to retrieveData.py and create a single c
 The login is structured so a username and password correspond to a student_id. So, unless it's a new student, you know the 
 student_id
 """
+from __future__ import print_function
 import sqlite3
+import sys
 
 def new_student(c, name, user, class_ids=[]):			#Create a new student, put them into certain classes
 	try:
-		print(type(user), type(name))
+		print("Adding {} as {}".format(name, user), file=sys.stderr)
 		c.execute("INSERT INTO student (name, user) VALUES (?, ?)", (name, user))
 	except sqlite3.IntegrityError:
 		return "Username already in use"			#Needs some work
