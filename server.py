@@ -72,7 +72,6 @@ def your_classes(username):
 	student_id = retrieve.find_student_id(c, username)
 	name = retrieve.find_student_name(c, student_id)
 	classes = retrieve.find_students_classes(c, student_id)
-	print(classes)
 	return render_template('student_dashboard.html', name = name, classes=classes)
 
 @app.route('/user=<username>/class=<class_name>')
