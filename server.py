@@ -69,4 +69,4 @@ def end_func(conn):
 
 if __name__ == '__main__':
 	atexit.register(end_func, conn=conn)
-	app.run(debug=True, threaded=False)
+	app.run(debug=True, threaded=True)
