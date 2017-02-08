@@ -8,18 +8,12 @@
 	    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
 	  </head>
 <body>
-<h1>{{class_name}} projects</h1>
-	<dl>
-		{% for index, project in projects %}
-		<dt><h2><a href="/project/{{project.project_id}}">{{project.project_name}}</a> <a href="/professor/{{course.course_contact}}">({{ course.course_contact }})</a></h2></dt>
-		<dd>{{ course.course_description }}</dd>
-		<a href="/">Go Back to Course Catalog Home</a>
-		{% endfor %}
-	</dl>    
+<h1>{{class_name}}</h1>
+
+{% for project_name in project_names %}
+<a href="">{{project_name}}</a>
+{% endfor %}
+
+
 </body>
-</body>
-
-
-<!--Here: a list of the students in the class, perhaps-->
-
 </html>

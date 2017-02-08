@@ -31,8 +31,21 @@ def find_students_projects(c, student_id):		#Return a list of all a student's pr
 	c.execute("SELECT project_id FROM student_project WHERE student_id=(?)", (student_id, ))
 	project_ids=tuple([thing[0] for thing in c.fetchall()])
 	return project_ids
+
+
+
+
+def find_students_class_projects(c, class_id, student_id):
+	c.execute("SELECT project.project_id FROM project, student_project WHERE project.project_id == student_project.project_id AND student_project.student_id=(?) and project.class_id=(?)", (student_id, class_id))
+	project_ids=tuple([thing[0] for thing in c.fetchall()])
+	return project_ids
 	# c.execute("SELECT title FROM project WHERE project_id in (" + ",".join("?"*len(project_ids)) + ")", project_ids)
 	# return c.fetchall()
+
+
+
+
+
 
 def find_classes_projects(c, class_id):			#Return a list of all projects in a class
 	c.execute("SELECT title FROM project WHERE class_id=(?)", (class_id, ))
