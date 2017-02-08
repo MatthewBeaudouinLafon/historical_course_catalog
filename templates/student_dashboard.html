@@ -7,19 +7,48 @@
 	<link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/normalize.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/skeleton.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+	<style type="text/css">
+		.class_boxes{
+			border:thin solid; text-align:left; margin-bottom:1.5rem; padding: 1rem; height: 7rem
+		}
+		.title{
+			border-bottom:thin ridge; margin-bottom: 2rem
+		}
+	</style>
 </head>
 
 <body>
 	<div class="container">
 		<div class="row" style="text-align:center">
-			<h2>{{name}}</h2>
+			<h2 class>{{name}}</h2>
 		<div class="row">
-			{% for class in classes %}
-				<div class="six columns" style="border-style:dashed; text-align:left">
-					<h2><a href="/user={{username}}/class={{class}}">{{class}}</a></h2>
-				</div>	
-			{% endfor %}
+			<div class="eight columns title">
+				<h4> Classes </h4>
+			</div>
+			<div class="four columns title">
+				<h4> Projects </h4>
+			</div>
 		</div>
+		{% for (class_id, project_id) in classes_projects %}
+			<div class="row">
+				{% if class_id %}
+					<div class="eight columns class_boxes">
+						<h5><a href="/user={{username}}/class={{class_id}}">{{classes[class_id]}}</a></h5>
+					</div>
+				{% else %}
+					<div class="eight columns">&nbsp;</div>
+				{% endif %}
+
+				{% if project_id %}
+					<div class="four columns class_boxes">
+						<h5><a href="/user={{username}}/project={{project_id}}">{{projects[project_id]}}</a></h5>
+					</div>
+				{% else %}
+					<div class="four columns">&nbsp;</div>
+				{% endif %}
+			</div>
+		{% endfor %}
+		
 	</div>
 </body>
 

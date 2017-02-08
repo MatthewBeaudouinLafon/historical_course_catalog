@@ -8,10 +8,10 @@ from __future__ import print_function
 import sqlite3
 import sys
 
-def new_student(c, name, user, class_ids=[]):			#Create a new student, put them into certain classes
+def new_student(c, first_name, last_name, user, class_ids=[]):			#Create a new student, put them into certain classes
 	try:
-		print("Adding {} as {}".format(name, user), file=sys.stderr)
-		c.execute("INSERT INTO student (name, user) VALUES (?, ?)", (name, user))
+		print("Adding {} as {}".format(first_name+" "+last_name, user), file=sys.stderr)
+		c.execute("INSERT INTO student (first_name, last_name, user) VALUES (?, ?, ?)", (first_name, last_name, user))
 	except sqlite3.IntegrityError:
 		return "Username already in use"			#Needs some work
 	student_id = c.lastrowid

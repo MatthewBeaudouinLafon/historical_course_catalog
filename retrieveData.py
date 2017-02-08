@@ -11,7 +11,7 @@ def find_student_id(c, user):
 	if the_id:
 		return the_id[0]
 	else:
-		return "No such user?"			#Needs work
+		raise ValueError
 
 def find_students_in_class(c, class_id):		#Return a list of names of students in a class with a certain class_id
 	c.execute("SELECT student_id FROM class_student WHERE class_id=(?)", (class_id, ))
@@ -43,8 +43,10 @@ def find_class_name(c, class_id):				#Tell you the name of a class based on id
 	return c.fetchone()[0]
 
 def find_student_name(c, student_id):			#Tell you the name of a student based on id
-	c.execute("SELECT name FROM student WHERE student_id=(?)", (student_id, ))
-	return c.fetchone()[0]
+	print("Student ID: " + str(student_id))
+	c.execute("SELECT first_name, last_name FROM student WHERE student_id=(?)", (student_id, ))
+	full_name = c.fetchone()
+	return (" ".join(full_name))
 
 def find_project_title(c, project_id):			#Tell you the title of a project based on id
 	c.execute("SELECT title FROM project WHERE project_id=(?)", (project_id, ))
