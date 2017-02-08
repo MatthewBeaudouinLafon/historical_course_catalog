@@ -8,7 +8,8 @@ import storeData as store
 
 import sqlite3
 
-sqlite_file = "data.sqlite"
+#sqlite_file = "data.sqlite"
+sqlite_file = "test_data.sqlite"
 
 # conn = sqlite3.connect(sqlite_file)
 # c = conn.cursor()
@@ -74,8 +75,12 @@ def your_classes(username):
 def show_single_class(username, class_name):
 	c=get_db().cursor()
 	student_id=retrieve.find_student_id(c, username)
+	print('student_id: ', student_id)
 	name=retrieve.find_student_name(c, student_id)
-	return render_template('class_dashboard.html', username=username, class_name=class_name, name=name)
+	print('name: ', name)
+	projects=retrieve.find_students_projects(c, student_id)
+	print('projects: ', projects)
+	return render_template('class_dashboard.html', username=username, class_name=class_name, name=name, projects=projects)
 
 # @app.route('/project_page')
 # def login():	

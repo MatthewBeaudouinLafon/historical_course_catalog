@@ -9,11 +9,14 @@
 	  </head>
 <body>
 <h1>{{class_name}} projects</h1>
-{{username}}
-{{name}}
-<h2><a href="">Project 1: robot</a></h2>
-<h2><a href="">Project 2: scanner</a></h2>
-<h2><a href="">Project 3: final project</a></h2>
+	<dl>
+		{% for index, project in projects %}
+		<dt><h2><a href="/project/{{project.project_id}}">{{project.project_name}}</a> <a href="/professor/{{course.course_contact}}">({{ course.course_contact }})</a></h2></dt>
+		<dd>{{ course.course_description }}</dd>
+		<a href="/">Go Back to Course Catalog Home</a>
+		{% endfor %}
+	</dl>    
+</body>
 </body>
 
 
