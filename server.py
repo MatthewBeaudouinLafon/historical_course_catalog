@@ -32,6 +32,7 @@ app = Flask(__name__)
 def close_connection(exception):
 	db = getattr(g, '_database', None)
 	if db is not None:
+		db.commit()
 		db.close()
 
 
@@ -67,11 +68,14 @@ def new_user():
 
 @app.route('/user=<username>')
 def your_classes(username):	
-    return render_template('your_classes_home.html', username=username)
+    return render_template('student_dashboard.html', username=username)
 
 @app.route('/user=<username>/class=<class_name>')
-def show_single_class(username, class_name):	
-    return render_template('projects_by_class.html')
+def show_single_class(username, class_name):
+	c=get_db().cursor()
+	student_id=retrieve.find_student_id(c, username)
+	name=retrieve.find_student_name(c, student_id)
+	return render_template('class_dashboard.html', username=username, class_name=class_name, name=name)
 
 # @app.route('/project_page')
 # def login():	

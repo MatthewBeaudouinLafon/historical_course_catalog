@@ -9,7 +9,7 @@ def find_student_id(c, user):
 	c.execute("SELECT student_id FROM student WHERE user=(?)", (user, ))
 	the_id = c.fetchone()
 	if the_id:
-		return the_id
+		return the_id[0]
 	else:
 		return "No such user?"			#Needs work
 
@@ -37,12 +37,12 @@ def find_classes_projects(c, class_id):			#Return a list of all projects in a cl
 
 def find_class_name(c, class_id):				#Tell you the name of a class based on id
 	c.execute("SELECT name FROM class WHERE class_id=(?)", (class_id, ))
-	return c.fetchone()
+	return c.fetchone()[0]
 
 def find_student_name(c, student_id):			#Tell you the name of a student based on id
 	c.execute("SELECT name FROM student WHERE student_id=(?)", (student_id, ))
-	return c.fetchone()
+	return c.fetchone()[0]
 
 def find_project_title(c, project_id):			#Tell you the title of a project based on id
 	c.execute("SELECT title FROM project WHERE project_id=(?)", (project_id, ))
-	return c.fetchone()
+	return c.fetchone()[0]

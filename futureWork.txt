@@ -1,0 +1,18 @@
+>> User Login Process <<
+We would like this tool to integrate with existing institutional portals/web resources such that users can access it through familiar institutional sites and log in using their existing institutional credentials. 
+
+>> User Interactions by User Type <<
+Primary users of this tool in its current form fall into two groups: students and professors. 
+
+Professors:
+When professors log in, they see the professor dashboard. In its most basic form, this consists of 
+1.Currently teaching a class, in which case they can use this site to collect students' documentation of projects. Some interactions in this setting include entering course project names so that documentation can be submitted under a consistent project name, browsing student documentation with a selection of sorting options, and perhaps responding to that documentation in some way.
+2.Going to teach a class they haven't taught before, in which case they can use this site to look back through the documentation of previous iterations of the class and gain understanding of its execution. 
+
+
+Students:
+When students log in, they see the student dashboard. In its most basic form, this consists of a list of their classes (potentially pulled from the institution's data given their credentials). Upon selecting a class, the student is presented with a list of that class's projects. Upon selecting a project, the student either submits their documentation or is able to view the documentation they have submitted. 
+
+Classes are labeled in the user's view with their course title and semester (ex. SP'17). 
+
+It would be nice if there were any security measures at all implemented.
