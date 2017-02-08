@@ -8,7 +8,7 @@ import storeData as store
 
 import sqlite3
 
-sqlite_file = "data.sqlite"
+sqlite_file = "test_data.sqlite"
 
 # conn = sqlite3.connect(sqlite_file)
 # c = conn.cursor()
@@ -52,7 +52,9 @@ def login_page():
 @app.route('/login', methods=['POST'])
 def login():	
     username = request.form['username']
-    return redirect('/user='+username)
+    c = get_db().cursor()
+    student_id = retrieve.find_student_id(c, username)
+    return redirect('/user='+str(student_id))
 
 @app.route('/new_user')
 def new_user_page():	
@@ -61,18 +63,37 @@ def new_user_page():
 @app.route('/new_user', methods=['POST'])
 def new_user():	
 	c = get_db().cursor()
-	name = request.form['name']
+	first_name = request.form['first_name']
+	last_name = request.form['last_name']
 	username = request.form['username']
-	store.new_student(c, name, username)
-	return redirect("/login")
+	student_id = store.new_student(c, first_name, last_name, username)
+	return redirect("/user="+str(student_id))
 
-@app.route('/user=<username>')
-def your_classes(username):	
-    return render_template('your_classes_home.html', username=username)
+@app.route('/user=<student_id>')
+def your_classes(student_id):	
+	c = get_db().cursor()
+	name = retrieve.find_student_name(c, student_id)
 
-@app.route('/user=<username>/class=<class_name>')
-def show_single_class(username, class_name):	
-    return render_template('projects_by_class.html')
+	class_ids = retrieve.find_students_classes(c, student_id)
+	class_names = [retrieve.find_class_name(c, class_id) for class_id in class_ids]
+	classes = dict(zip(class_ids, class_names))			#Map ids to names
+	print(classes)
+
+	project_ids = retrieve.find_students_projects(c, student_id)
+	project_names = [retrieve.find_project_title(c, project_id) for project_id in project_ids]
+	projects = dict(zip(project_ids, project_names))	#Map ids to names
+	print(projects)
+
+	classes_projects = [(class_ids[i] if len(class_ids)>i else None, project_ids[i] if \
+		len(project_ids)>i else None) for i in range(max(len(class_ids), len(project_ids)))]		#Create an iterable of classes and projcts
+	print(classes_projects)
+
+	return render_template('student_dashboard.html', student_id=student_id, name = name, classes_projects=classes_projects, \
+		classes=classes, projects=projects)
+
+@app.route('/user=<student_id>/class=<class_name>')
+def show_single_class(student_id, class_name):	
+    return render_template('class_dashboard.html')
 
 # @app.route('/project_page')
 # def login():	
