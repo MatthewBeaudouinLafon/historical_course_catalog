@@ -33,7 +33,7 @@
 			<div class="row">
 				{% if class_id %}
 					<div class="eight columns class_boxes">
-						<h5><a href="/user={{username}}/class={{class_id}}">{{classes[class_id]}}</a></h5>
+						<h5><a href="/user={{student_id}}/class={{class_id}}">{{classes[class_id]}}</a></h5>
 					</div>
 				{% else %}
 					<div class="eight columns">&nbsp;</div>
@@ -41,7 +41,7 @@
 
 				{% if project_id %}
 					<div class="four columns class_boxes">
-						<h5><a href="/user={{username}}/project={{project_id}}">{{projects[project_id]}}</a></h5>
+						<h5><a href="/user={{student_id}}/project={{project_id}}">{{projects[project_id]}}</a></h5>
 					</div>
 				{% else %}
 					<div class="four columns">&nbsp;</div>

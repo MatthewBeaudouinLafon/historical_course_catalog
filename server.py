@@ -52,7 +52,9 @@ def login_page():
 @app.route('/login', methods=['POST'])
 def login():	
     username = request.form['username']
-    return redirect('/user='+username)
+    c = get_db().cursor()
+    student_id = retrieve.find_student_id(c, username)
+    return redirect('/user='+str(student_id))
 
 @app.route('/new_user')
 def new_user_page():	
@@ -64,13 +66,12 @@ def new_user():
 	first_name = request.form['first_name']
 	last_name = request.form['last_name']
 	username = request.form['username']
-	store.new_student(c, first_name, last_name, username)
-	return redirect("/user="+username)
+	student_id = store.new_student(c, first_name, last_name, username)
+	return redirect("/user="+str(student_id))
 
-@app.route('/user=<username>')
-def your_classes(username):	
+@app.route('/user=<student_id>')
+def your_classes(student_id):	
 	c = get_db().cursor()
-	student_id = retrieve.find_student_id(c, username)
 	name = retrieve.find_student_name(c, student_id)
 
 	class_ids = retrieve.find_students_classes(c, student_id)
@@ -87,11 +88,11 @@ def your_classes(username):
 		len(project_ids)>i else None) for i in range(max(len(class_ids), len(project_ids)))]		#Create an iterable of classes and projcts
 	print(classes_projects)
 
-	return render_template('student_dashboard.html', username=username, name = name, classes_projects=classes_projects, \
+	return render_template('student_dashboard.html', student_id=student_id, name = name, classes_projects=classes_projects, \
 		classes=classes, projects=projects)
 
-@app.route('/user=<username>/class=<class_name>')
-def show_single_class(username, class_name):	
+@app.route('/user=<student_id>/class=<class_name>')
+def show_single_class(student_id, class_name):	
     return render_template('class_dashboard.html')
 
 # @app.route('/project_page')
