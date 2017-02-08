@@ -94,7 +94,6 @@ def show_single_class(username, class_name):
 # 	conn.close()
 
 if __name__ == '__main__':
-	# atexit.register(end_func, conn=get_db())
+
 	atexit.register(close_connection)
 	app.run(debug=True, threaded=True)
-
