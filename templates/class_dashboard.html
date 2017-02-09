@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Projects</title>
+		<title> Projects of {{class_name}}</title>
 		<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/normalize.css')}}">
 	    <link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/skeleton.css')}}">
@@ -10,10 +10,10 @@
 <body>
 <h1>{{class_name}}</h1>
 
-{% for project_name in project_names %}
-<a href="">{{project_name}}</a>
+{% for project in projects %}
+<h2><a href="/user={{student_id}}/project={{project.id}}">{{project.name}}</a></h2>
 {% endfor %}
-
+<!-- make the link above redirect to the submission form if documentation has not already been submitted.-->
 
 </body>
 </html>

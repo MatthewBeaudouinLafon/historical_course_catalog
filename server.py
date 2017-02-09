@@ -95,9 +95,13 @@ def your_classes(student_id):
 def show_single_class(student_id, class_id):
 	c=get_db().cursor()
 	project_ids=retrieve.find_students_class_projects(c, class_id, student_id)
-	project_names=[retrieve.find_project_title(c, project_id) for project_id in project_ids]
+	projects=[]
+	for project_id in project_ids:
+		project_name=retrieve.find_project_title(c, project_id)
+		projects.append({'name':project_name, 'id':project_id})
+	#project_names=[retrieve.find_project_title(c, project_id) for project_id in project_ids]
 	class_name=retrieve.find_class_name(c, class_id)
-	return render_template('class_dashboard.html', project_ids=project_ids, project_names=project_names, class_name=class_name)
+	return render_template('class_dashboard.html', projects=projects, class_name=class_name, student_id=student_id)
 
 # @app.route('/project_page')
 # def login():	
