@@ -95,8 +95,28 @@ def your_classes(student_id):
 def show_single_class(student_id, class_name):	
     return render_template('class_dashboard.html')
 
-@app.route('/user=<student_id>/project=<project_id>')
-def show_project(student_id, project_id):
+@app.route('/user=<student_id>/class=<class_id>/project_form')
+def new_project_page(student_id, class_id):
+	return render_template('project_form.html')
+
+@app.route('/user=<student_id>/class=<class_id>/project_form', methods=['POST'])
+def new_project(student_id, class_id):
+	c = get_db().cursor()
+
+	title = request.form['title']
+	students = request.form['students']
+	description = request.form['description']
+	link = request.form['link']
+
+	student_ids = [student_id]
+	for user in students.split(', '):
+		student_ids.append(retrieve.find_student_id(c, user))
+
+	project_id = store.new_project(c, class_id, title, description, link, student_ids)
+	return redirect("/user=<student_id>/class=<class_id>/project="+str(project_id))
+
+@app.route('/user=<student_id>/class=<class_id>/project=<project_id>')
+def show_project(student_id, class_id, project_id):
 	c = get_db().cursor()
 	title = retrieve.find_project_title(c, project_id)
 	descr = retrieve.find_project_descr(c, project_id)
@@ -105,22 +125,6 @@ def show_project(student_id, project_id):
 	student_ids = retrieve.find_project_students(c, project_id)
 	student_names = [retrieve.find_student_name(c, student_id) for student_id in student_ids]
 	return render_template('project_dashboard.html', title=title, descr=descr, link=link, class_name=class_name, student_names=student_names, project_id=project_id)
-
-# @app.route('/project_page')
-# def login():	
-#     return render_template('project_page.html')
-
-# @app.route('/input_form')
-# def login():	
-#     return render_template('input_form.html')
-
-# @app.route('/area/<course_area>')
-# def area_page(course_area):
-#     return render_template('course_area.html', courses=courses[courses.course_area == course_area].iterrows())
-
-# def end_func(conn):
-# 	conn.commit()
-# 	conn.close()
 
 if __name__ == '__main__':
 

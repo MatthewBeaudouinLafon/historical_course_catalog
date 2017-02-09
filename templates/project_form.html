@@ -15,12 +15,16 @@
 				<h4 style="margin-bottom: 1rem;">Class Name</h4>
 			</section>
 
-			<form>
+			<form method="POST">
+				<label for="title">Title</label>
+				<input id="title" name="title">
+				<label for="students">Student usernames</label>
+				<input id="students" name="students">
 				<label for="description">Description</label>
-				<textarea id="description" class="u-full-width"></textarea>
+				<textarea id="description" name="description" class="u-full-width"></textarea>
 				<label for="link"> Link to site, files, pictures, or other documentation</label>
-				<input id="link"><br>
-				<input type="submit" value="Submit">
+				<input id="link" name="link"><br>
+				<input type="submit" value="Submit" onclick="location.href='/user={{ student_id }}/class={{ class_id }}/project={{ project_id }}'">
 			</form>
 		</div>
 	</body>
