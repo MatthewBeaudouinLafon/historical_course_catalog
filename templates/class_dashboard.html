@@ -24,13 +24,13 @@
 		{% for project in projects %}
 			<div class="row">
 				<div class="twelve columns class_boxes">
-					<h5><a href="/user={{student_id}}/class={{class_id}}/project={{project.id}}">{{project.name}}</a></h5>
+					<h5><a href="/user={{student_id}}/class={{class_id}}/project={{project.id}}" style="color:black">{{project.name}}</a></h5>
 				</div>
 			</div>	
 		{% endfor %}
 		<div class="row">
 			<div class="twelve columns" style="text-align:left; margin-bottom:1.5rem; padding: 1rem; height: 7rem">
-				<h5>+ <a href="/user={{student_id}}/class={{class_id}}/project_form">New Project</a></h5>
+				<a href="/user={{student_id}}/class={{class_id}}/project_form" style="color:black"><h5>+ New Project</h5></a>
 			</div>
 		</div>
 		<!-- make the link above redirect to the submission form if documentation has not already been submitted.-->

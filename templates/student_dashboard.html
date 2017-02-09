@@ -21,7 +21,8 @@
 	<div class="container">
 		<div class="row" style="text-align:center">
 			<h2 class>{{name}}</h2>
-		<div class="row">
+		</div>
+		<div class="row" style="text-align:center">
 			<div class="seven columns title">
 				<h4> Classes </h4>
 			</div>
@@ -33,7 +34,7 @@
 			<div class="row">
 				{% if class_id %}
 					<div class="seven columns class_boxes">
-						<h5><a href="/user={{student_id}}/class={{class_id}}">{{classes[class_id]}}</a></h5>
+						<h5><a href="/user={{student_id}}/class={{class_id}}" style="color:black">{{classes[class_id]}}</a></h5>
 					</div>
 				{% else %}
 					<div class="seven columns">&nbsp;</div>
@@ -41,7 +42,7 @@
 
 				{% if project_id %}
 					<div class="five columns class_boxes">
-						<h5><a href="/user={{student_id}}/class={{project_class_id}}/project={{project_id}}">{{projects[project_id]}}</a></h5>
+						<h5><a href="/user={{student_id}}/class={{project_class_id}}/project={{project_id}}" style="color:black">{{projects[project_id]}}</a></h5>
 					</div>
 				{% else %}
 					<div class="five columns">&nbsp;</div>

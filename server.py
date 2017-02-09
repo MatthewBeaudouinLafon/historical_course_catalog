@@ -105,7 +105,7 @@ def show_single_class(student_id, class_id):
 def new_project_page(student_id, class_id):
 	c = get_db().cursor()
 	class_name = retrieve.find_class_name(c, class_id)
-	return render_template('project_form.html', class_name=class_name)
+	return render_template('project_form.html', page_title="Add Project", class_name=class_name)
 
 @app.route('/user=<student_id>/class=<class_id>/project_form', methods=['POST'])
 def new_project(student_id, class_id):
@@ -133,7 +133,7 @@ def edit_project_page(student_id, class_id, project_id):
 	title = retrieve.find_project_title(c, project_id)
 	student_ids = retrieve.find_project_students(c, project_id)
 	student_users = ", ".join(retrieve.find_student_user(c, student_id) for student_id in student_ids)
-	return render_template('project_form.html', class_name=class_name, descr=descr, link=link, student_users=student_users, title=title)
+	return render_template('project_form.html', page_title="Edit Project", class_name=class_name, descr=descr, link=link, student_users=student_users, title=title)
 
 @app.route('/user=<student_id>/class=<class_id>/project=<project_id>/edit', methods=['POST'])
 def edit_project(student_id, class_id, project_id):
