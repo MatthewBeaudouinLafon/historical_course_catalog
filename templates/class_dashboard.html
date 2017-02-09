@@ -1,19 +1,39 @@
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title> Projects of {{class_name}}</title>
-		<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/normalize.css')}}">
-	    <link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/skeleton.css')}}">
-	    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
-	  </head>
+<head>
+	<meta charset="utf-8">
+	<title> Projects of {{class_name}}</title>
+	<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/normalize.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='Skeleton-2.0.4/css/skeleton.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+	<style type="text/css">
+		.class_boxes{
+			border:thin solid; text-align:left; margin-bottom:1.5rem; padding: 1rem; height: 7rem
+		}
+		.title{
+			border-bottom:thin ridge; margin-bottom: 2rem
+		}
+	</style>
+</head>
+
 <body>
-<h1>{{class_name}}</h1>
-
-{% for project in projects %}
-<h2><a href="/user={{student_id}}/project={{project.id}}">{{project.name}}</a></h2>
-{% endfor %}
-<!-- make the link above redirect to the submission form if documentation has not already been submitted.-->
-
+	<div class="container">
+		<div class="row title" style="text-align: center">
+			<h2>{{class_name}}</h2>
+		</div>
+		{% for project in projects %}
+			<div class="row">
+				<div class="twelve columns class_boxes">
+					<h5><a href="/user={{student_id}}/class={{class_id}}/project={{project.id}}">{{project.name}}</a></h5>
+				</div>
+			</div>	
+		{% endfor %}
+		<div class="row">
+			<div class="twelve columns" style="text-align:left; margin-bottom:1.5rem; padding: 1rem; height: 7rem">
+				<h5>+ <a href="/user={{student_id}}/class={{class_id}}/project_form">New Project</a></h5>
+			</div>
+		</div>
+		<!-- make the link above redirect to the submission form if documentation has not already been submitted.-->
+	</div>
 </body>
 </html>

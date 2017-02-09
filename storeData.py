@@ -32,6 +32,12 @@ def new_project(c, class_id, title, description, link, student_ids=[]):		#Create
 		c.execute("INSERT INTO student_project (student_id, project_id) VALUES (?, ?)", (student_id, project_id))
 	return project_id
 
+def update_project(c, project_id, class_id, title, description, link, student_ids=[]):		#Create a new project in a class w/students
+	c.execute("UPDATE project SET title = ?, class_id = ?, description = ?, link = ? WHERE project_id=?", (title, class_id, description, link, project_id))
+	c.execute("DELETE FROM student_project where project_id = ?", (project_id, ))		#Replace current joins with new ones
+	for student_id in student_ids:
+		c.execute("INSERT INTO student_project (student_id, project_id) VALUES (?, ?)", (student_id, project_id))
+
 def add_students_class(c, class_id, student_ids):		#Add students to an existing class; student_ids must be a list
 	print(student_ids)
 	for student_id in student_ids:

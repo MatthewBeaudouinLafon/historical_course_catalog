@@ -10,20 +10,22 @@
 
 	<body>
 		<div class="container">
-			<section class="header">
-				<h1>Project</h1>
-				<h4 style="margin-bottom: 1rem;">Class Name</h4>
-			</section>
+			<div class="row">
+				<h2>Add Project</h2>
+			</div>
+			<div class="row">
+				<h4 style="border-bottom:thin ridge; margin-bottom: 2rem">{{class_name}}</h4>
+			</div>
 
 			<form method="POST">
 				<label for="title">Title</label>
-				<input id="title" name="title">
+				<input id="title" name="title" value="{{title}}">
 				<label for="students">Student usernames</label>
-				<input id="students" name="students">
+				<input id="students" name="students" value="{{student_users}}">
 				<label for="description">Description</label>
-				<textarea id="description" name="description" class="u-full-width"></textarea>
+				<textarea id="description" name="description" class="u-full-width">{{descr}}</textarea>
 				<label for="link"> Link to site, files, pictures, or other documentation</label>
-				<input id="link" name="link"><br>
+				<input id="link" name="link" value="{{link}}"><br>
 				<input type="submit" value="Submit" onclick="location.href='/user={{ student_id }}/class={{ class_id }}/project={{ project_id }}'">
 			</form>
 		</div>

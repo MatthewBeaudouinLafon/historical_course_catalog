@@ -84,7 +84,7 @@ def your_classes(student_id):
 	print(projects)
 
 	classes_projects = [(class_ids[i] if len(class_ids)>i else None, project_ids[i] if \
-		len(project_ids)>i else None) for i in range(max(len(class_ids), len(project_ids)))]		#Create an iterable of classes and projcts
+		len(project_ids)>i else None, retrieve.find_project_class(c, project_ids[i]) if len(project_ids)>i else None) for i in range(max(len(class_ids), len(project_ids)))]		#Create an iterable of classes and projcts
 	print(classes_projects)
 	return render_template('student_dashboard.html', student_id=student_id, name = name, classes_projects=classes_projects, \
 		classes=classes, projects=projects)
@@ -99,11 +99,13 @@ def show_single_class(student_id, class_id):
 		projects.append({'name':project_name, 'id':project_id})
 	#project_names=[retrieve.find_project_title(c, project_id) for project_id in project_ids]
 	class_name=retrieve.find_class_name(c, class_id)
-	return render_template('class_dashboard.html', projects=projects, class_name=class_name, student_id=student_id)
+	return render_template('class_dashboard.html', projects=projects, class_name=class_name, student_id=student_id, class_id=class_id)
 
 @app.route('/user=<student_id>/class=<class_id>/project_form')
 def new_project_page(student_id, class_id):
-	return render_template('project_form.html')
+	c = get_db().cursor()
+	class_name = retrieve.find_class_name(c, class_id)
+	return render_template('project_form.html', class_name=class_name)
 
 @app.route('/user=<student_id>/class=<class_id>/project_form', methods=['POST'])
 def new_project(student_id, class_id):
@@ -113,13 +115,39 @@ def new_project(student_id, class_id):
 	students = request.form['students']
 	description = request.form['description']
 	link = request.form['link']
-
+	print("##########################" + str(students))
 	student_ids = [student_id]
-	for user in students.split(', '):
-		student_ids.append(retrieve.find_student_id(c, user))
+	if students:
+		for user in students.split(', '):
+			student_ids.append(retrieve.find_student_id(c, user))
 
 	project_id = store.new_project(c, class_id, title, description, link, student_ids)
-	return redirect("/user=<student_id>/class=<class_id>/project="+str(project_id))
+	return redirect("/user="+str(student_id)+"/class="+str(class_id)+"/project="+str(project_id))
+
+@app.route('/user=<student_id>/class=<class_id>/project=<project_id>/edit')
+def edit_project_page(student_id, class_id, project_id):
+	c = get_db().cursor()
+	class_name = retrieve.find_class_name(c, class_id)
+	descr = retrieve.find_project_descr(c, project_id)
+	link = retrieve.find_project_link(c, project_id)
+	title = retrieve.find_project_title(c, project_id)
+	student_ids = retrieve.find_project_students(c, project_id)
+	student_users = ", ".join(retrieve.find_student_user(c, student_id) for student_id in student_ids)
+	return render_template('project_form.html', class_name=class_name, descr=descr, link=link, student_users=student_users, title=title)
+
+@app.route('/user=<student_id>/class=<class_id>/project=<project_id>/edit', methods=['POST'])
+def edit_project(student_id, class_id, project_id):
+	c = get_db().cursor()
+	title = request.form['title']
+	students = request.form['students']
+	description = request.form['description']
+	link = request.form['link']
+	student_ids = []
+	if students:
+		for user in students.split(', '):
+			student_ids.append(retrieve.find_student_id(c, user))
+	store.update_project(c, project_id, class_id, title, description, link, student_ids)
+	return redirect("/user="+str(student_id)+"/class="+str(class_id)+"/project="+str(project_id))
 
 @app.route('/user=<student_id>/class=<class_id>/project=<project_id>')
 def show_project(student_id, class_id, project_id):

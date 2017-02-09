@@ -58,6 +58,10 @@ def find_student_name(c, student_id):			#Tell you the name of a student based on
 	full_name = c.fetchone()
 	return (" ".join(full_name))
 
+def find_student_user(c, student_id):			#Tell you the name of a student based on id
+	c.execute("SELECT user FROM student WHERE student_id=(?)", (student_id, ))
+	return c.fetchone()[0]
+
 def find_project_title(c, project_id):			#Tell you the title of a project based on id
 	c.execute("SELECT title FROM project WHERE project_id=(?)", (project_id, ))
 	return c.fetchone()[0]
