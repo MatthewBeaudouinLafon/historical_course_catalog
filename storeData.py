@@ -25,8 +25,8 @@ def new_class(c, name, student_ids=[]):			#Create a new class with certain stude
 	add_students_class(c, class_id, student_ids)
 	return class_id
 
-def new_project(c, class_id, student_ids=[], project_title="Alice in Wonderland"):		#Create a new project in a class w/students
-	c.execute("INSERT INTO project (title, class_id) VALUES (?, ?)", (project_title, class_id))
+def new_project(c, class_id, title, description, link, student_ids=[]):		#Create a new project in a class w/students
+	c.execute("INSERT INTO project (title, class_id, description, link) VALUES (?, ?, ?, ?)", (title, class_id, description, link))
 	project_id = c.lastrowid
 	for student_id in student_ids:
 		c.execute("INSERT INTO student_project (student_id, project_id) VALUES (?, ?)", (student_id, project_id))
