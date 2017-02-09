@@ -39,6 +39,11 @@ def find_students_class_projects(c, class_id, student_id):
 	# c.execute("SELECT title FROM project WHERE project_id in (" + ",".join("?"*len(project_ids)) + ")", project_ids)
 	# return c.fetchall()
 
+def find_project_students(c, project_id):		#Return a list of students on a project
+	c.execute("SELECT student_id FROM student_project WHERE project_id=(?)", (project_id, ))
+	student_ids=tuple([thing[0] for thing in c.fetchall()])
+	return student_ids
+
 def find_classes_projects(c, class_id):			#Return a list of all projects in a class
 	c.execute("SELECT title FROM project WHERE class_id=(?)", (class_id, ))
 	return c.fetchall()
@@ -55,4 +60,16 @@ def find_student_name(c, student_id):			#Tell you the name of a student based on
 
 def find_project_title(c, project_id):			#Tell you the title of a project based on id
 	c.execute("SELECT title FROM project WHERE project_id=(?)", (project_id, ))
+	return c.fetchone()[0]
+
+def find_project_descr(c, project_id):			#Gives you the description of a project based on id
+	c.execute("SELECT description FROM project WHERE project_id=(?)", (project_id, ))
+	return c.fetchone()[0]
+
+def find_project_link(c, project_id):			#Gives you the link of a project based on id
+	c.execute("SELECT link FROM project WHERE project_id=(?)", (project_id, ))
+	return c.fetchone()[0]
+
+def find_project_class(c, project_id):			#Gives you the link of a project based on id
+	c.execute("SELECT class_id FROM project WHERE project_id=(?)", (project_id, ))
 	return c.fetchone()[0]
