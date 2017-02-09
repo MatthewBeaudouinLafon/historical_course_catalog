@@ -95,6 +95,17 @@ def your_classes(student_id):
 def show_single_class(student_id, class_name):	
     return render_template('class_dashboard.html')
 
+@app.route('/user=<student_id>/project=<project_id>')
+def show_project(student_id, project_id):
+	c = get_db().cursor()
+	title = retrieve.find_project_title(c, project_id)
+	descr = retrieve.find_project_descr(c, project_id)
+	link = retrieve.find_project_link(c, project_id)
+	class_name = retrieve.find_class_name(c, retrieve.find_project_class(c, project_id))
+	student_ids = retrieve.find_project_students(c, project_id)
+	student_names = [retrieve.find_student_name(c, student_id) for student_id in student_ids]
+	return render_template('project_dashboard.html', title=title, descr=descr, link=link, class_name=class_name, student_names=student_names, project_id=project_id)
+
 # @app.route('/project_page')
 # def login():	
 #     return render_template('project_page.html')
