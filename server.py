@@ -124,7 +124,7 @@ def show_project(student_id, class_id, project_id):
 	class_name = retrieve.find_class_name(c, retrieve.find_project_class(c, project_id))
 	student_ids = retrieve.find_project_students(c, project_id)
 	student_names = [retrieve.find_student_name(c, student_id) for student_id in student_ids]
-	return render_template('project_dashboard.html', title=title, descr=descr, link=link, class_name=class_name, student_names=student_names, project_id=project_id)
+	return render_template('project_dashboard.html', title=title, descr=descr, link=link, class_name=class_name, student_names=student_names, project_id=project_id, class_id=class_id, student_id=student_id)
 
 if __name__ == '__main__':
 
