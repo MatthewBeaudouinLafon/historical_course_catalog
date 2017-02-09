@@ -36,8 +36,6 @@ def close_connection(exception):
 		db.commit()
 		db.close()
 
-
-
 @app.route('/health')
 def health():
     return 'ok'
